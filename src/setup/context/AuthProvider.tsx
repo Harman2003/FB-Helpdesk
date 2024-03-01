@@ -1,0 +1,41 @@
+import React, { createContext, useState, ReactNode } from "react";
+
+export interface AuthInterface {
+  name: string;
+  id: string;
+  email: string;
+  accessToken: string;
+  picture: string;
+}
+export interface AuthContextProps {
+  auth: AuthInterface;
+  setAuth: React.Dispatch<React.SetStateAction<AuthInterface>>;
+}
+
+export const AuthContext = createContext<AuthContextProps>({
+  auth: {
+    name: "",
+    email: "",
+    id: "",
+    accessToken: "",
+    picture: "",
+  },
+  setAuth: () => null,
+});
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const storedAuthDetails = localStorage.getItem("auth");
+  const prevAuthDetails = storedAuthDetails
+    ? JSON.parse(storedAuthDetails)
+    : null;
+
+  const [auth, setAuth] = useState<AuthInterface>(prevAuthDetails);
+
+  return (
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
