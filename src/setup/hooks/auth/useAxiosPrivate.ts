@@ -1,4 +1,4 @@
-import { axiosPrivate } from "../../api/axios";
+import { axiosPrivate } from "../../axios/axios";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
@@ -15,8 +15,6 @@ const useAxiosPrivate = () => {
         config.params = {
           ...config.params,
           email: auth.email,
-          role: auth.role,
-          id: auth.id,
         };
         return config;
       },
@@ -29,12 +27,12 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           console.log("axios 403 error");
           prevRequest.sent = true;
-          const { email, newAccessToken, role, id } = await refresh();
+          const { email, newAccessToken } = await refresh();
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
           return axiosPrivate({
             ...prevRequest,
-            params: { email: email, role: role, id: id },
+            params: { email: email},
           });
         }
 

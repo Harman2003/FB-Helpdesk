@@ -1,38 +1,35 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Input from "../components/input/Input"
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AuthInterface } from "@/setup/context/AuthProvider";
-import useApiSender from "@/setup/hooks/api/useApiSender";
 import useAuth from "@/setup/hooks/auth/useAuth";
+import useApiSender from "@/setup/hooks/api/useApiSender";
 import { validateAuth } from "@/utils/validate";
-import Input from "../components/input/Input";
-import { register } from "@/webApi/register";
 import spinner from "@/assets/spinner.svg";
 import { toast } from "sonner";
+import { login } from "@/webApi/login";
+const Signin = () => {
 
-const Signup = () => {
-  const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const { send, data, isLoading, status } = useApiSender(register, false);
+  const { send, data, isLoading, status } = useApiSender(login, false);
   const { setAuth } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const signup = async (event: FormEvent) => {
+  const signin = async (event: FormEvent) => {
     event.preventDefault();
-    const { name, email, pass } = {
-      name: nameRef.current,
+    const { email, pass } = {
       email: emailRef.current,
       pass: passRef.current,
     };
-    if (name && email && pass) {
-      const info = validateAuth(name.value, email.value, pass.value);
+    if (email && pass) {
+      const info = validateAuth("user", email.value, pass.value);
       if (info) toast.info(info);
       else {
         try {
           await send({
-            name: name.value,
             email: email.value,
             password: pass.value,
             remember: isChecked,
@@ -46,33 +43,31 @@ const Signup = () => {
 
   useEffect(() => {
     if (status === "success" && data) {
-      console.log('here')
       const { name, email, page_id, picture, accessToken } = data;
       const authData: AuthInterface = {
         name: name,
         email: email,
         page_id: page_id,
         picture: picture,
-        accessToken: accessToken
-      }
+        accessToken: accessToken,
+      };
       setAuth({ ...authData });
       const from = location.state?.from?.pathname || "/connect";
       navigate(from, { replace: true });
     }
-  }, [data])
+  }, [data]);
 
   return (
     <div className="bg-[#044080] w-full h-full flex px-4 font-Montserrat">
       <form
         className="m-auto bg-white w-full max-w-[400px] p-8 rounded-2xl flex flex-col gap-5"
-        onSubmit={signup}
+        onSubmit={signin}
         noValidate
       >
         <span className="text-lg self-center font-semibold">
-          Create Account
+          Login to your Account
         </span>
         <div className="flex flex-col gap-2">
-          <Input field="Name" type="text" ref={nameRef} />
           <Input field="Email" type="email" ref={emailRef} />
           <Input field="Password" type="password" ref={passRef} />
           <div className="flex items-center gap-2">
@@ -92,18 +87,18 @@ const Signup = () => {
           {isLoading ? (
             <img src={spinner} alt="loading" className="w-6" />
           ) : (
-            "Signup"
+            "Login"
           )}
         </button>
         <div className="self-center">
-          Already have an account?{" "}
-          <Link to={"/login"} className="text-blue-500">
-            Login
+          New to MyApp?{" "}
+          <Link to={"/register"} className="text-blue-500">
+            Sign Up
           </Link>
         </div>
       </form>
     </div>
   );
-};
+}
 
-export default Signup;
+export default Signin

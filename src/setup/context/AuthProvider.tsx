@@ -1,26 +1,26 @@
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useCallback } from "react";
 
 export interface AuthInterface {
   name: string;
-  id: string;
   email: string;
+  page_id: string;
   accessToken: string;
   picture: string;
 }
 export interface AuthContextProps {
   auth: AuthInterface;
-  setAuth: React.Dispatch<React.SetStateAction<AuthInterface>>;
+  setAuth: (auth: AuthInterface)=>void
 }
 
 export const AuthContext = createContext<AuthContextProps>({
   auth: {
     name: "",
     email: "",
-    id: "",
+    page_id: "",
     accessToken: "",
     picture: "",
   },
-  setAuth: () => null,
+  setAuth: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
@@ -31,7 +31,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     ? JSON.parse(storedAuthDetails)
     : null;
 
-  const [auth, setAuth] = useState<AuthInterface>(prevAuthDetails);
+  const [auth, setAuth_] = useState<AuthInterface>(prevAuthDetails);
+  const setAuth = useCallback((auth: AuthInterface) => {
+    setAuth_(auth);
+    localStorage.setItem("auth", JSON.stringify(auth));
+  },[])
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

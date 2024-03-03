@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 // import { toast } from "react-toastify";
 import useAxiosPrivate from "../auth/useAxiosPrivate";
 import axios from "@/setup/axios/axios";
+import { toast } from "sonner";
 
 const useApiSender = (call: any, isPrivate: boolean) => {
   const axiosPrivate = useAxiosPrivate();
@@ -14,7 +15,7 @@ const useApiSender = (call: any, isPrivate: boolean) => {
     }
   };
 
-   const { mutateAsync, isLoading, data: response, status} = useMutation(apiCall, {
+   const { mutateAsync, isLoading, data, status} = useMutation(apiCall, {
      onSuccess: (response: AxiosResponse) => {
        console.log(response?.data);
      },
@@ -23,11 +24,10 @@ const useApiSender = (call: any, isPrivate: boolean) => {
        if (error) {
          message = (error as any).response?.data?.message;
          if (!message) message = "Something went wrong";
-        //  toast.error(message);
+         toast.error(message);
        } else {
          message = res?.data?.message;
-         // if (!message) message = "Success";
-        //  if (message) toast.success(message);
+         if(message)toast.success(message);
        }
      },
    });
@@ -36,7 +36,7 @@ const useApiSender = (call: any, isPrivate: boolean) => {
   return {
     send,
     isLoading,
-    data: response?.data,
+    data: data?.data,
     status,
   };
 };

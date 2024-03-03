@@ -1,4 +1,4 @@
-import axios from "../../api/axios";
+import axios from "../../axios/axios";
 import useAuth from "./useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -10,8 +10,6 @@ const useRefreshToken = () => {
   async function refresh(): Promise<{
     email: string;
     newAccessToken: string;
-    role: string;
-    id:string
   }> {
     try {
       const response = await axios.get("/auth/refresh", {
@@ -21,13 +19,12 @@ const useRefreshToken = () => {
         withCredentials: true,
       });
       console.log("refresh token");
-      const {name, email, id, picture, role, accessToken} = response.data;
+      const {name, email, page_id, picture, accessToken} = response.data;
       const authObject= {
         name: name,
         email: email,
-        id: id,
+        page_id: page_id,
         picture: picture,
-        role: role,
         accessToken: accessToken,
       }
       localStorage.setItem(
@@ -38,9 +35,7 @@ const useRefreshToken = () => {
 
       return {
         email: authObject.email,
-        newAccessToken: authObject.accessToken,
-        role: authObject.role,
-        id:authObject.id
+        newAccessToken: authObject.accessToken
       };
     } catch (err) {
       console.log('userefresh')
