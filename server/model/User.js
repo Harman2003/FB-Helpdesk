@@ -1,4 +1,4 @@
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
 const User = new Schema(
@@ -18,11 +18,16 @@ const User = new Schema(
     },
     picture: {
       type: String,
-      required:true,
+      required: true,
     },
     page_id: {
       type: Number,
-      unique: true,
+      required: false,
+      index: {
+        unique: true,
+        partialFilterExpression: { page_id: { $type: "number" } },
+      },
+      default: null,
     },
     page_name: String,
     page_token: String,
@@ -33,4 +38,4 @@ const User = new Schema(
   }
 );
 
-module.exports = Mongoose.model('User',User);
+module.exports = Mongoose.model("User", User);

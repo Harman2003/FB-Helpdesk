@@ -6,14 +6,30 @@ const corsOptions = require("./config/corsOptions");
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConnect");
-const AuthRouter = require("./routes/authRoutes");
 const verifyJWT = require("./middleware/verifyJWT");
+const verifyAccount = require("./middleware/verifyAccount");
+const authRouter = require("./routes/authRoutes");
+const pageRouter = require("./routes/pageRoutes");
+const chatRouter = require("./routes/chatRoutes");
+const webhookRouter = require("./routes/webhookRoutes");
 
-App.use(express.json());
+App.use(
+  express.json({
+    limit: "5mb",
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString();
+    },
+  })
+);
 App.use(express.urlencoded({ extended: false }));
 App.use(cors(corsOptions));
-App.use("/auth", AuthRouter);
-App.use(verifyJWT);
+// App.post("/*", (req, res)=>{  console.log(req.protocol + "://" + req.get("host") + req.originalUrl);'
+// })
+App.use("/auth", authRouter);
+App.use("/webhook", webhookRouter);
+App.use(verifyJWT, verifyAccount);
+App.use("/page", pageRouter);
+App.use("/chat", chatRouter);
 
 connectDB();
 

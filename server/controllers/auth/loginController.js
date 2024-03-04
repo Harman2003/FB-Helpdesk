@@ -11,7 +11,7 @@ const handleLogin = async (req, res) => {
     }
     const foundUser = await User.findOne({ email: email });
     if (!foundUser) {
-      return res.status(401).json({ message: "Credentials does not match" }); //unauthorized
+      return res.status(404).json({ message: "User not found" }); //unauthorized
     }
 
     const match = await bcrypt.compare(password, foundUser.password);
@@ -28,7 +28,7 @@ const handleLogin = async (req, res) => {
           email: foundUser.email,
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: remember?"30d":"5d" }
+        { expiresIn: remember?"30d":"7d" }
       );
 
       await User.updateOne(
@@ -46,6 +46,7 @@ const handleLogin = async (req, res) => {
         accessToken,
         name: foundUser.name,
         email: foundUser.email,
+        page_id: foundUser.page_id,
         picture: foundUser.picture,
         // message: "Successfully Logged In",
       };

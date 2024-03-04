@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
   try {
     const duplicate = await User.findOne({ email: email });
     if (duplicate) {
-      return res.sendStatus(409); //conflict
+      return res.status(409).json({message:"Email already registered"}); //conflict
     }
 
     //encrypt

@@ -14,17 +14,14 @@ const refreshJWT = async (req, res) => {
     const accessToken = jwt.sign(
       {
         email: decoded.email,
-        role: decoded.role,
-        id: decoded.id,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "10m" }
     );
     const data = {
       name: foundUser.name,
-      email: decoded.email,
-      role: decoded.role,
-      id: foundUser.id,
+      email: foundUser.email,
+      page_id: foundUser.page_id,
       picture: foundUser.picture,
       accessToken,
     };
