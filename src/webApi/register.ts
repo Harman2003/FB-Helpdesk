@@ -20,8 +20,9 @@ export const register = async ({
       name: name,
       email: email,
       password: password,
-      remember:remember
+      remember: remember,
     },
+    { withCredentials: true }
   );
   return response;
 };

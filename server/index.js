@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const App = express();
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const corsOptions = require("./config/corsOptions");
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -22,9 +23,8 @@ App.use(
   })
 );
 App.use(express.urlencoded({ extended: false }));
+App.use(cookieParser());
 App.use(cors(corsOptions));
-// App.post("/*", (req, res)=>{  console.log(req.protocol + "://" + req.get("host") + req.originalUrl);'
-// })
 App.use("/auth", authRouter);
 App.use("/webhook", webhookRouter);
 App.use(verifyJWT, verifyAccount);

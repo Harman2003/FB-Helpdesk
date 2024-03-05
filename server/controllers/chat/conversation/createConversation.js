@@ -1,6 +1,6 @@
 const User = require("../../../model/User");
 const Conversations = require("../../../model/Conversation");
-const getCustomerProfile = require("../../../apis/profiles/getCustomerProfile");
+const getCustomerProfile = require("../../../apis/data/getCustomerProfile");
 const hasDayPassed = require("../../../utils/hasDayPassed");
 const parseFBMessage = require("../../../utils/parseFBMessage");
 

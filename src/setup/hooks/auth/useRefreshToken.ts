@@ -39,7 +39,7 @@ const useRefreshToken = () => {
       };
     } catch (err) {
       console.log('userefresh')
-      navigate("/auth/login", { state: { from: location } });
+      navigate("/login", { state: { from: location } });
       throw err;
     }
   }

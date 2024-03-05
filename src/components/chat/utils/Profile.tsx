@@ -21,7 +21,7 @@ const Profile = () => {
             view
           </span>
         </a>
-        <span className="text-xl font-semibold">Amit RG</span>
+        <span className="text-xl font-medium">Amit RG</span>
         <span
           className={tw(
             "flex items-center",
@@ -34,11 +34,11 @@ const Profile = () => {
         </span>
 
         <div className="flex gap-3 mt-4">
-          <div className="flex gap-2 items-center px-3 py-0.5 rounded-md border-2 border-gray-400 font-semibold text-gray-600">
+          <div className="flex gap-2 items-center px-3 py-0.5 rounded-md border-2 border-gray-400 font-medium text-gray-600">
             <SlCallOut />
             <span>Call</span>
           </div>
-          <div className="flex gap-2 items-center px-3 py-0.5 rounded-lg border-2 border-gray-400 font-semibold text-gray-600">
+          <div className="flex gap-2 items-center px-3 py-0.5 rounded-lg border-2 border-gray-400 font-medium text-gray-600">
             <FaUserCircle />
             <span>Profile</span>
           </div>
@@ -47,7 +47,7 @@ const Profile = () => {
 
       <div className="w-full p-4">
               <div className="w-full bg-white rounded-md border p-3">
-                  <span className="font-semibold">Customer details</span> 
+                  <span className="font-medium">Customer details</span> 
                   <div className="grid grid-cols-2">
                       <span>Email</span>
                       <span>amit@richpanel.com</span>

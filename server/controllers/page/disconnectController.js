@@ -7,6 +7,7 @@ const disconnectController = async (req, res) => {
 
   try {
     const user = await User.findById(user_id);
+    console.log(user.page_id, user.page_token)
     await unsubscribeWebhook(user.page_id, user.page_token);
 
     user.page_id = null;

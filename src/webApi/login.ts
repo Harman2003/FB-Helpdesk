@@ -12,10 +12,14 @@ export const login = async ({
   remember,
   axios,
 }: loginProps): Promise<AxiosResponse | void> => {
-  const response = await axios.post("/auth/login", {
-    email: email,
-    password: password,
-    remember: remember,
-  });
+  const response = await axios.post(
+    "/auth/login",
+    {
+      email: email,
+      password: password,
+      remember: remember,
+    },
+    { withCredentials: true }
+  );
   return response;
 };

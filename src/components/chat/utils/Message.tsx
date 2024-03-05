@@ -23,7 +23,7 @@ const Message: React.FC<MessageProps> = ({ text, time, icon, mode }) => {
               mode == "self" && "right-0"
             )}
           >
-            <span className="text-xs text-gray-800 font-semibold">Amit RG</span>
+            <span className="text-xs text-gray-800 font-medium">Amit RG</span>
             <span className="text-xs text-gray-800">- Mar 05, 2.22AM</span>
           </div>
         </div>

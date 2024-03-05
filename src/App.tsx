@@ -15,23 +15,23 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={client}>
-        <div className="App w-screen h-screen">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/register" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/connect"
-              element={
-                <FacebookProvider appId="1373741216661586">
-                  <Connect />
-                </FacebookProvider>
-              }
-            />
-            <Route path="/chat/*" element={<Conversations />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </div>
+          <div className="App w-screen h-screen">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/register" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/connect"
+                element={
+                  <FacebookProvider appId="1373741216661586">
+                    <Connect />
+                  </FacebookProvider>
+                }
+              />
+              <Route path="/chat/*" element={<Conversations />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </div>
         <Toaster richColors position="top-center" />
       </QueryClientProvider>
     </AuthProvider>

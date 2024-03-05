@@ -30,6 +30,7 @@ const User = new Schema(
       default: null,
     },
     page_name: String,
+    user_token:String,
     page_token: String,
     refreshToken: String,
   },

@@ -9,7 +9,6 @@ const getCustomerProfile = async (customer_id, page_token) => {
         gender:"-"
     }
 
-    try {  
         const response = await axios.get(`https://graph.facebook.com/${customer_id}`, {
             params: {
                 fields: "first_name,last_name,profile_pic,gender,gender,timezone",
@@ -23,10 +22,6 @@ const getCustomerProfile = async (customer_id, page_token) => {
         data["timezone"] = timezone;
         data["gender"] = gender;
         
-    } catch (err) {
-        console.log(err);
-    }
-
     return data;
 }
 

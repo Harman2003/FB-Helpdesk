@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const storedAuthDetails = localStorage.getItem("auth");
   const prevAuthDetails = storedAuthDetails
     ? JSON.parse(storedAuthDetails)
-    : null;
+    : {name:"", email:"", page_id:"", accessToken:"", picture:""};
 
   const [auth, setAuth_] = useState<AuthInterface>(prevAuthDetails);
   const setAuth = useCallback((auth: AuthInterface) => {
