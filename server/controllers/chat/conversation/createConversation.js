@@ -69,7 +69,8 @@ const createConversation = async (payload) => {
       seen,
     },
     async (err, response) => {
-      if (typeof response === "object" && response[0].chat_id) {
+      if (err) return;
+      if (typeof response === "object" && response[0]?.chat_id) {
         const { chat_id } = response[0];
 
         const conversation_ = await Conversations.findById(chat_id);
