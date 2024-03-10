@@ -1,5 +1,5 @@
 const corsOptions = {
-  origin: '*',
+  origin: "https://helpdeskfb.vercel.app",
   credentials: true,
 };
 
