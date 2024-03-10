@@ -1,28 +1,6 @@
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
-const Customer = new Schema({
-  firstname: {
-    type: String,
-    required: true,
-  },
-  lastname: {
-    type: String,
-    required: false,
-  },
-  img: {
-    type: String,
-    required: true,
-  },
-  timezone: {
-    type: String,
-    default: null,
-  },
-  gender: {
-    type: String,
-    default: null,
-  },
-});
 
 const Conversation = new Schema(
   {
@@ -30,8 +8,8 @@ const Conversation = new Schema(
       type: String,
       required:true
     },
-    customer: {
-      type: Customer,
+    customer_name: {
+      type: String,
       required:true
     },
     last_message: {
@@ -39,8 +17,8 @@ const Conversation = new Schema(
       required: true,
     },
     seen: {
-      type: String,
-      default: false,
+      type: Number,
+      default: 0,
     },
     user_id: {
       type: Mongoose.Types.ObjectId,
@@ -48,7 +26,7 @@ const Conversation = new Schema(
       required: true,
     },
     updatedAt: {
-      type: Number,
+      type: Date,
       required:true,
     }
   }

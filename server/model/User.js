@@ -20,15 +20,7 @@ const User = new Schema(
       type: String,
       required: true,
     },
-    page_id: {
-      type: Number,
-      required: false,
-      index: {
-        unique: true,
-        partialFilterExpression: { page_id: { $type: "number" } },
-      },
-      default: null,
-    },
+    page_id: Number,
     page_name: String,
     user_token:String,
     page_token: String,

@@ -43,11 +43,10 @@ const Signin = () => {
 
   useEffect(() => {
     if (status === "success" && data) {
-      const { name, email, page_id, picture, accessToken } = data;
+      const { name, email, picture, accessToken } = data;
       const authData: AuthInterface = {
         name: name,
         email: email,
-        page_id: page_id,
         picture: picture,
         accessToken: accessToken,
       };
@@ -69,7 +68,7 @@ const Signin = () => {
         </span>
         <div className="flex flex-col gap-2">
           <Input field="Email" type="email" ref={emailRef} />
-          <Input field="Password" type="password" ref={passRef} />
+          <Input field="Password" type="password" ref={passRef} className="text-2xl"/>
           <div className="flex items-center gap-2">
             <input
               type="checkbox"

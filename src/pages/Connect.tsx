@@ -8,17 +8,20 @@ import Modal from "@/components/modal/Modal";
 import { connectFBUser } from "@/webApi/connectFBUser";
 import useApiSender from "@/setup/hooks/api/useApiSender";
 import { disconnectFB } from "@/webApi/disconnectFB";
+import { Link } from "react-router-dom";
+import usePage from "@/setup/hooks/auth/usePage";
 
 const Connect = () => {
   const { auth } = useAuth();
+  const { page, pageFetching, refetch } = usePage();
   const { login } = useLogin();
   const [isModal, setIsModal] = useState<boolean>(false);
-  const { data, isLoading, receive } = useApiReceiver(
-    "/page/status",
-    { email: auth.email },
-    true
-  );
-  const { page_id, page_name, status } = data || {};
+  // const { data, isLoading, receive } = useApiReceiver(
+  //   "/page/status",
+  //   { email: auth.email },
+  //   true
+  // );
+  const { page_id, page_name, status } = page;
   const { send: connect, isLoading: connecting } = useApiSender(
     connectFBUser,
     true
@@ -32,7 +35,7 @@ const Connect = () => {
     try {
       const { authResponse } = await login({
         scope:
-          "public_profile, pages_show_list, pages_manage_metadata, pages_messaging",
+          "email, public_profile, pages_show_list, pages_manage_metadata, pages_messaging",
       });
 
       await connect({
@@ -54,13 +57,13 @@ const Connect = () => {
     }
   };
   useEffect(() => {
-    if (!isModal || !connecting || !disconnecting) receive();
+    if (!isModal || !connecting || !disconnecting) refetch();
   }, [isModal, connecting, disconnecting]);
 
   return (
     <div className="bg-[#044080] w-full h-full flex px-4 font-Montserrat relative">
       <div className="m-auto bg-white w-full max-w-[400px] min-h-[200px]  p-8 rounded-2xl flex flex-col justify-center items-center gap-5">
-        {isLoading ? (
+        {pageFetching ? (
           <img src={connectSpinner} alt="connecting..." className="w-6" />
         ) : (
           <>
@@ -88,19 +91,31 @@ const Connect = () => {
                 )}
               </button>
             )}
-            <button
-              className="w-full bg-[#044080] rounded-md h-12 p-3 mt-2 text-white flex justify-center"
-              onClick={onConnect}
-              disabled={connecting || status === "connected"}
-            >
-              {connecting ? (
-                <img src={spinner} alt="Loading..." className="w-6" />
-              ) : status === "connected" ? (
-                <span>Page ID - {page_id}</span>
-              ) : (
-                "Connect Page"
-              )}
-            </button>
+
+            {status === "connected" ? (
+              <Link
+                to={"/app"}
+                className="w-full bg-[#044080] rounded-md h-12 p-3 mt-2 text-white flex justify-center cursor-pointer"
+              >
+                {connecting ? (
+                  <img src={spinner} alt="Loading..." className="w-6" />
+                ) : (
+                  "Reply To Messages"
+                )}
+              </Link>
+            ) : (
+              <button
+                className="w-full bg-[#044080] rounded-md h-12 p-3 mt-2 text-white flex justify-center cursor-pointer"
+                onClick={onConnect}
+                disabled={connecting}
+              >
+                {connecting ? (
+                  <img src={spinner} alt="Loading..." className="w-6" />
+                ) : (
+                  "Connect Page"
+                )}
+              </button>
+            )}
           </>
         )}
 

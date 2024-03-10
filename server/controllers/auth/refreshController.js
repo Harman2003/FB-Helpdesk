@@ -15,12 +15,11 @@ const refreshJWT = async (req, res) => {
         email: decoded.email,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "10m" }
+      { expiresIn: "1d" }
     );
     const data = {
       name: foundUser.name,
       email: foundUser.email,
-      page_id: foundUser.page_id,
       picture: foundUser.picture,
       accessToken,
     };

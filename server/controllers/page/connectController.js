@@ -14,8 +14,12 @@ const connectController = async (req, res) => {
       res.sendStatus(200);
     } else {
       const { page_name, page_id } = req.body;
+
+      const foundUser = await User.exists({ page_id });
+      if (foundUser) {
+        return res.status(409).json({ message: "Page already in use" });
+      }
       const profile = await getPageProfile(page_name, page_id, user.user_token);
-      
       user.page_id = page_id;
       user.page_name = profile.page_name;
       user.page_token = profile.page_token;
@@ -26,7 +30,7 @@ const connectController = async (req, res) => {
       res.status(200).json({ message: "connection success" });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.sendStatus(500);
   }
 };

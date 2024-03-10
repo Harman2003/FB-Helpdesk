@@ -15,6 +15,6 @@ const getPagesController = async (req, res) => {
     console.log(err.message);
     res.sendStatus(500);
   }
-};
+}
 
 module.exports = getPagesController;

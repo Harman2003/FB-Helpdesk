@@ -29,7 +29,7 @@ const useAxiosPrivate = () => {
           prevRequest.sent = true;
           const { email, newAccessToken } = await refresh();
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
+          
           return axiosPrivate({
             ...prevRequest,
             params: { email: email},

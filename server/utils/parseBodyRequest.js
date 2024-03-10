@@ -9,15 +9,22 @@ const parseBodyRequest = (payload) => {
   const receiver_id = msg_data.recipient.id;
   const timestamp = msg_data.timestamp;
 
-  const message = { type: "text", text: "", image: "" };
+  const message = {mid:"", type: "text", text: "", image: "" };
   const msg_obj = msg_data.message;
   if (msg_obj.attachments) {
     const attachments = msg_obj.attachments[0];
     message.type = attachments.type;
     message.image = attachments.payload.url;
+
+    //for sticker imgs
+    if (attachments.payload.sticker_id) {
+      message.type = "sticker";
+    }
   } else {
     message.text = msg_obj.text;
   }
+  message.mid = msg_obj.mid;
+  
   return { page_id, sender_id, receiver_id, timestamp, message };
 };
 module.exports = parseBodyRequest;

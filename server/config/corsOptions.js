@@ -1,7 +1,8 @@
 const corsOptions = {
   origin: [
-    "https://185c-2401-4900-80b7-ca8c-e50a-f6b7-e80f-18c6.ngrok-free.app",
+    "https://0a8e-2401-4900-80af-6adb-8060-2dcb-86c1-bf7d.ngrok-free.app",
     "http://localhost:5173",
+    "https://helpdeskfb.vercel.app/",
   ],
   credentials: true,
 };

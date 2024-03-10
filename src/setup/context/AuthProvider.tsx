@@ -3,7 +3,6 @@ import React, { createContext, useState, ReactNode, useCallback } from "react";
 export interface AuthInterface {
   name: string;
   email: string;
-  page_id: string;
   accessToken: string;
   picture: string;
 }
@@ -16,7 +15,6 @@ export const AuthContext = createContext<AuthContextProps>({
   auth: {
     name: "",
     email: "",
-    page_id: "",
     accessToken: "",
     picture: "",
   },
@@ -29,7 +27,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const storedAuthDetails = localStorage.getItem("auth");
   const prevAuthDetails = storedAuthDetails
     ? JSON.parse(storedAuthDetails)
-    : {name:"", email:"", page_id:"", accessToken:"", picture:""};
+    : {name:"", email:"", accessToken:"", picture:""};
 
   const [auth, setAuth_] = useState<AuthInterface>(prevAuthDetails);
   const setAuth = useCallback((auth: AuthInterface) => {

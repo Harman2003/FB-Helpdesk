@@ -8,6 +8,10 @@ const payloadSchema = new Schema({
 
 const Message = new Schema(
   {
+    mid: {
+      type: String,
+      unique:true,
+    },
     conversation_id: {
       type: Mongoose.Types.ObjectId,
       ref: "Conversation",
@@ -21,6 +25,11 @@ const Message = new Schema(
       type: Number,
       required: true,
     },
+    mode: {
+      type: String,
+      enum: ['self', 'other'],
+      required:true
+    },
     message: {
       type: String,
       required: false,
@@ -29,10 +38,11 @@ const Message = new Schema(
       type: payloadSchema,
       required: false,
     },
+    createdAt: {
+      type: Date,
+      required:true
+    }
   },
-  {
-    timestamps: true,
-  }
 );
 
 module.exports = Mongoose.model("Message", Message);

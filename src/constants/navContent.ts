@@ -12,7 +12,7 @@ export interface navContentProps {
 }
 export const navContent: navContentProps[] = [
   { id: "app-icon", Icon: IoIosGitNetwork, title: "App", link: "/" },
-  { id: "inbox-icon", Icon: FaInbox, title: "Inbox", link: "/chat" },
-  { id: "users-icon", Icon: FaUsers, title: "Users", link: "/chat/users" },
-  { id: "growth-icon", Icon: BsBarChartFill, title: "Report", link: "/chat/report" },
+  { id: "inbox-icon", Icon: FaInbox, title: "Inbox", link: "/app" },
+  { id: "users-icon", Icon: FaUsers, title: "Users", link: "/app/users" },
+  { id: "growth-icon", Icon: BsBarChartFill, title: "Report", link: "/app/report" },
 ]

@@ -6,8 +6,9 @@ const sendCustomerMesssage = async (
   customer_id,
   page_token
 ) => {
-  const response = await axios.post(
-    `https://graph.facebook.com/19/${page_id}/messages`,
+  const {data} = await axios.post(
+    `https://graph.facebook.com/v19.0/${page_id}/messages`,
+    {},
     {
       params: {
         recipient: { id: customer_id },
@@ -17,7 +18,7 @@ const sendCustomerMesssage = async (
       },
     }
   );
-  return response;
+  return data;
 };
 
 module.exports = sendCustomerMesssage;

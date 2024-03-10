@@ -28,7 +28,6 @@ const hasSubscribedWebhook = async (page_id, page_token) => {
   } catch (err) {
     console.log(err.message);
   }
-  
   return status;
 };
 

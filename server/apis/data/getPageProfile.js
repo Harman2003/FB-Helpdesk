@@ -2,11 +2,27 @@ const axios = require("axios");
 
 const getPageProfile = async (page_name, page_id, user_token) => {
   const generatePageToken = async () => {
-    const {data: pages_} = await axios.get("https://graph.facebook.com/me/accounts", {
-      params: {
-        access_token: user_token,
-      },
-    });
+  
+    const {data:long_live_data} = await axios.get(
+      "https://graph.facebook.com/v19.0/oauth/access_token",
+      {
+        params: {
+          grant_type: "fb_exchange_token",
+          client_id: process.env.APP_ID,
+          client_secret: process.env.APP_SECRET,
+          fb_exchange_token: user_token,
+        },
+      }
+    );
+    
+    const { data: pages_ } = await axios.get(
+      "https://graph.facebook.com/me/accounts",
+      {
+        params: {
+          access_token: long_live_data.access_token,
+        },
+      }
+    );
     const pagesList = pages_.data;
     let access_token;
     if (pagesList) {
@@ -42,7 +58,6 @@ const getPageProfile = async (page_name, page_id, user_token) => {
     picture,
   };
 };
-
 
 module.exports = getPageProfile;
 

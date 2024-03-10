@@ -1,23 +1,32 @@
 const createConversation = require("../conversation/createConversation");
 const receiveMessages = require("../messages/receiveMessage");
 const parseBodyRequest = require("../../../utils/parseBodyRequest");
+const Message = require("../../../model/Messages");
 
 const webhookController = async (req, res) => {
-    if (req.body.object === "page") {
-        const payload = parseBodyRequest(req.body.entry);
+  if (req.body.object === "page") {
+    try {
+      const payload = parseBodyRequest(req.body.entry);
+      const isMessageExisting = await Message.exists({
+        mid: payload.message.mid,
+      });
+      if (!isMessageExisting) {
         const conversation_id = await createConversation(payload);
-        if (!conversation_id) {
-            return res.status(403).send("unauthorized_request");
+        if (conversation_id) {
+          await receiveMessages(payload, conversation_id);
+          // console.log(payload, conversation_id);
         }
-        await receiveMessages(payload, conversation_id);
-        res.status(200).send("EVENT_RECEIVED");
-    } else {
-        res.sendStatus(404);
+      }
+    } catch (err) {
+      console.log(err);
     }
-}
+    res.status(200).send("EVENT_RECEIVED");
+  } else {
+    res.sendStatus(404);
+  }
+};
 
 module.exports = webhookController;
-
 
 // Body:{
 //    "object": "page",

@@ -19,11 +19,10 @@ const useRefreshToken = () => {
         withCredentials: true,
       });
       console.log("refresh token");
-      const {name, email, page_id, picture, accessToken} = response.data;
+      const {name, email, picture, accessToken} = response.data;
       const authObject= {
         name: name,
         email: email,
-        page_id: page_id,
         picture: picture,
         accessToken: accessToken,
       }

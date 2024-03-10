@@ -2,15 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  scroll-behavior: smooth;
+}
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 0px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #ffffff;
+  background-color: #ffffff00;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #cdcdcd;
+  background-color: #e4e4e4a7;
 }

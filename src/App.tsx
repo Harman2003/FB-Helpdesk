@@ -9,29 +9,22 @@ import NotFound from "./pages/NotFound";
 import Connect from "./pages/Connect";
 import Conversations from "./pages/Conversations";
 import { Toaster } from "sonner";
+import { PageProvider } from "./setup/context/PageProvider";
+import Page from "./pages/Page";
 
 function App() {
   const client = new QueryClient();
   return (
     <AuthProvider>
       <QueryClientProvider client={client}>
-          <div className="App w-screen h-screen">
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/register" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/connect"
-                element={
-                  <FacebookProvider appId="1373741216661586">
-                    <Connect />
-                  </FacebookProvider>
-                }
-              />
-              <Route path="/chat/*" element={<Conversations />} />
-              <Route path="/*" element={<NotFound />} />
-            </Routes>
-          </div>
+        <div className="App w-screen h-screen">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/register" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={<Page />} />
+          </Routes>
+        </div>
         <Toaster richColors position="top-center" />
       </QueryClientProvider>
     </AuthProvider>
