@@ -58,7 +58,7 @@ const sendMessages = async (req, res) => {
     );
     await conversation.save();
 
-    await Message.create(saveMessageObject);
+    // await Message.create(saveMessageObject);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Message not sent" });
