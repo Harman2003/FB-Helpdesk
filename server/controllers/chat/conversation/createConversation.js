@@ -25,11 +25,12 @@ const createConversation = async (payload) => {
 
   if (!conversation || hasDayPassed(conversation.updatedAt)) {
     //store customer profile
-    let customer_profile = await Customers.findOne({ customer_id });
-    if (!customer_profile) {
-      customer_profile = await getCustomerProfile(customer_id, user.page_token);
-      await Customers.create({ ...customer_profile, customer_id });
-    }
+
+    const customer_profile = await getCustomerProfile(
+      customer_id,
+      user.page_token
+    );
+    await Customers.create({ ...customer_profile, customer_id });
 
     //new conversation
     const new_conversation_obj = {
