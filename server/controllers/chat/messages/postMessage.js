@@ -41,6 +41,7 @@ const sendMessages = async (req, res) => {
       },
       createdAt: new Date(),
     };
+    await Message.create(saveMessageObject);
 
     //update conversation
     conversation.last_message = message;
